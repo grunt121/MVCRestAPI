@@ -30,15 +30,30 @@ namespace Commander.Controllers
 
 
         //GET api/commands/{id}
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetCommandById")]
         public ActionResult<CommandReadDto> GetCommandById(int id)
         {
-            var commandItem = _repository.GetCommandById(id);
-            if(commandItem != null)
+            var command = _repository.GetCommandById(id);
+            if(command != null)
             {
-                return Ok(_mapper.Map<CommandReadDto>(commandItem));
+                return Ok(_mapper.Map<CommandReadDto>(command));
             }
             return NotFound();
+        }
+
+        [HttpPost]
+        public ActionResult<CommandReadDto> CreateCommand(CommandCreateDto commandCreateDto)
+        {
+            var commandModel = _mapper.Map<Command>(commandCreateDto);
+            _repository.CreateCommand(commandModel);
+            if (_repository.SaveChanges())
+            {
+                var returnCommanReadDto = _mapper.Map<CommandReadDto>(commandModel);
+                return CreatedAtRoute(nameof(GetCommandById), new { Id = returnCommanReadDto.Id }, returnCommanReadDto);
+            }
+
+            return UnprocessableEntity();
+
         }
 
       

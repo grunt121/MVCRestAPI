@@ -21,5 +21,25 @@ namespace Commander.Data
         {
             return new Command {Id=0, HowTo = "Boil An Egg", Line = "Boil water", Platform = "Kettle & Pan"};
         }
+
+        void ICommanderRepo.CreateCommand(Command command)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        IEnumerable<Command> ICommanderRepo.GetAllCommands()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Command ICommanderRepo.GetCommandById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        bool ICommanderRepo.SaveChanges()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
