@@ -10,8 +10,10 @@ namespace Commander.Models
         [MaxLength(250)]
         public string HowTo { get; set; }
         [MaxLength(250)]
+        [Required]
         public string Line { get; set; }
         [MaxLength(250)]
+        [Required]
         public string Platform { get; set; }
 
     }

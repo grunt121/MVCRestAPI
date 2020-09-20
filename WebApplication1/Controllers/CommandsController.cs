@@ -34,7 +34,7 @@ namespace Commander.Controllers
         public ActionResult<CommandReadDto> GetCommandById(int id)
         {
             var command = _repository.GetCommandById(id);
-            if(command != null)
+            if (command != null)
             {
                 return Ok(_mapper.Map<CommandReadDto>(command));
             }
@@ -46,14 +46,26 @@ namespace Commander.Controllers
         {
             var commandModel = _mapper.Map<Command>(commandCreateDto);
             _repository.CreateCommand(commandModel);
-            if (_repository.SaveChanges())
+            _repository.SaveChanges();
+
+            var returnCommanReadDto = _mapper.Map<CommandReadDto>(commandModel);
+            return CreatedAtRoute(nameof(GetCommandById), new { Id = returnCommanReadDto.Id }, returnCommanReadDto);
+        }
+
+        //PUT api/command/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdateCommand(int id, CommandUpdateDto commandUpdateDto)
+        {
+            var commandModelFromRepo = _repository.GetCommandById(id);
+            if(commandModelFromRepo == null)
             {
-                var returnCommanReadDto = _mapper.Map<CommandReadDto>(commandModel);
-                return CreatedAtRoute(nameof(GetCommandById), new { Id = returnCommanReadDto.Id }, returnCommanReadDto);
+                return NotFound();
             }
 
-            return UnprocessableEntity();
-
+            _mapper.Map(commandUpdateDto, commandModelFromRepo);  //AutoMapper taking care of the updates
+            _repository.UpdateCommand(commandModelFromRepo);
+            _repository.SaveChanges();
+            return NoContent();
         }
 
       

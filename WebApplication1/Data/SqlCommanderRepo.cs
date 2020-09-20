@@ -30,6 +30,11 @@ namespace Commander.Data
             return (_context.SaveChanges() >= 0);
         }
 
+        public void UpdateCommand(Command command)
+        {
+           //Nothing
+        }
+
         IEnumerable<Command> ICommanderRepo.GetAllCommands()
         {
             return _context.Commands.ToList();
@@ -39,5 +44,7 @@ namespace Commander.Data
         {
             return _context.Commands.FirstOrDefault(a => a.Id == id);
         }
+
+
     }
 }

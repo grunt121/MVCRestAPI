@@ -22,6 +22,11 @@ namespace Commander.Data
             return new Command {Id=0, HowTo = "Boil An Egg", Line = "Boil water", Platform = "Kettle & Pan"};
         }
 
+        public void UpdateCommand(Command command)
+        {
+            throw new System.NotImplementedException();
+        }
+
         void ICommanderRepo.CreateCommand(Command command)
         {
             throw new System.NotImplementedException();
